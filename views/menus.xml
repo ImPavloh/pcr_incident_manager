@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <menuitem id="pcr_incident_menu_root" 
+            name="Gestión de incidencias IT" 
+            sequence="10" />
+
+        <menuitem id="pcr_incident_menu_incidents" 
+            name="Incidencias" 
+            parent="pcr_incident_menu_root" 
+            action="pcr_incident_action" 
+            sequence="10"
+            />
+
+        <menuitem id="pcr_incident_menu_equipment" 
+            name="Equipos" 
+            parent="pcr_incident_menu_root" 
+            action="pcr_equipment_action" 
+            sequence="20" />
+
+        <menuitem id="pcr_incident_menu_technicians" 
+            name="Técnicos" 
+            parent="pcr_incident_menu_root" 
+            action="pcr_technician_action" 
+            sequence="30"
+        />
+
+        <!-- Menú configuración -->
+        <menuitem id="pcr_incident_menu_config" 
+            name="Configuración" 
+            parent="pcr_incident_menu_root" 
+            sequence="100"/>
+
+        <menuitem id="pcr_incident_menu_types" 
+            name="Tipos de incidencia" 
+            parent="pcr_incident_menu_config" 
+            action="pcr_incident_type_action" 
+            sequence="10"
+        />
+
+        <menuitem id="pcr_incident_menu_equipment_category" 
+            name="Categorías de equipo" 
+            parent="pcr_incident_menu_config" 
+            action="action_pcr_equipment_category" 
+            sequence="20"
+        />
+
+        <!-- sequence 30 es ajustes que está en settings.xml -->
+    </data>
+</odoo>

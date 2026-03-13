@@ -1,0 +1,1842 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pcr_incident_manager
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PCR Incident Manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-20 08:45+0000\n"
+"PO-Revision-Date: 2026-01-20 11:48+0100\n"
+"Last-Translator: \n"
+"Language-Team: Pablo\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#. module: pcr_incident_manager
+#: model:res.groups,comment:pcr_incident_manager.group_incident_manager
+msgid ""
+"\n"
+"                Acceso completo a todas las incidencias, equipos, técnicos y configuración.\n"
+"                Puede ver estadísticas y reportes globales.\n"
+"            "
+msgstr ""
+"\n"
+"                Full access to all incidents, equipment, technicians and settings.\n"
+"                Can view global statistics and reports.\n"
+"            "
+
+#. module: pcr_incident_manager
+#: model:res.groups,comment:pcr_incident_manager.group_incident_technician
+msgid ""
+"\n"
+"                Puede ver y gestionar solo las incidencias que tiene asignadas.\n"
+"                Acceso limitado a equipos y tipos de incidencia.\n"
+"            "
+msgstr ""
+"\n"
+"                Can view and manage only the incidents assigned to them.\n"
+"                Limited access to equipment and incident types.\n"
+"            "
+
+#. module: pcr_incident_manager
+#: model:ir.actions.report,print_report_name:pcr_incident_manager.action_report_incident
+msgid "'Incidencia_%s' % object.reference"
+msgstr "'Incident_%s' % object.reference"
+
+#. module: pcr_incident_manager
+#: model:mail.template,body_html:pcr_incident_manager.mail_template_incident_assigned
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-family: Arial, sans-serif;\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"background-color: #f4f4f4; padding: "
+"20px;\">\n"
+"                        <tr>\n"
+"                            <td align=\"center\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"background-color: #ffffff; "
+"border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n"
+"                                    <tr>\n"
+"                                        <td style=\"background-color: #875A7B; padding: 20px; border-radius: 8px 8px 0 0;\">\n"
+"                                            <h1 style=\"color: #ffffff; margin: 0; font-size: 24px;\">\n"
+"                                                Nueva incidencia asignada\n"
+"                                            </h1>\n"
+"                                        </td>\n"
+"                                    </tr>\n"
+"\n"
+"                                    <tr>\n"
+"                                        <td style=\"padding: 30px;\">\n"
+"                                            <p style=\"font-size: 16px; color: #333333; margin-bottom: 20px;\">\n"
+"                                                Hola <strong>{{ object.technician_id.name }}</strong>,\n"
+"                                            </p>\n"
+"                                            <p style=\"font-size: 14px; color: #666666; margin-bottom: 20px;\">\n"
+"                                                Se te ha asignado una nueva incidencia. Detalles:\n"
+"                                            </p>\n"
+"                                            \n"
+"                                            <table border=\"0\" cellpadding=\"8\" cellspacing=\"0\" width=\"100%\" style=\"background-"
+"color: #f9f9f9; border-radius: 4px; margin-bottom: 20px;\">\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555; width: 140px;\">Referencia:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.reference }}</td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Título:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.name }}</td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Equipo:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.equipment_id.name or 'No especificado' }}</"
+"td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Prioridad:</td>\n"
+"                                                    <td style=\"color: #333333;\">\n"
+"                                                        {{ {'0': 'Baja', '1': 'Normal', '2': 'Alta', '3': 'Urgente'}.get(object.priority, "
+"'Normal') }}\n"
+"                                                    </td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Estado:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.state }}</td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Fecha creación:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.date_created.strftime('%d/%m/%Y %H:%M') if "
+"object.date_created else '' }}</td>\n"
+"                                                </tr>\n"
+"                                            </table>\n"
+"\n"
+"                                            {% if object.description %}\n"
+"                                            <p style=\"font-weight: bold; color: #555555; margin-bottom: 8px;\">Descripción:</p>\n"
+"                                            <div style=\"background-color: #f0f0f0; padding: 15px; border-radius: 4px; color: #333333; "
+"margin-bottom: 20px;\">\n"
+"                                                {{ object.description }}\n"
+"                                            </div>\n"
+"                                            {% endif %}\n"
+"\n"
+"                                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n"
+"                                                <tr>\n"
+"                                                    <td align=\"center\">\n"
+"                                                        <a href=\"/"
+"web#id=%7B%7B%20object.id%20%7D%7D&amp;model=pcr_incident_manager.incident&amp;view_type=form\" style=\"display: inline-block; background-"
+"color: #875A7B; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold;\">\n"
+"                                                            Ver incidencia\n"
+"                                                        </a>\n"
+"                                                    </td>\n"
+"                                                </tr>\n"
+"                                            </table>\n"
+"                                        </td>\n"
+"                                    </tr>\n"
+"\n"
+"                                    <tr>\n"
+"                                        <td style=\"background-color: #f4f4f4; padding: 20px; text-align: center; border-radius: 0 0 8px "
+"8px;\">\n"
+"                                            <p style=\"font-size: 12px; color: #888888; margin: 0;\">\n"
+"                                                Este es un mensaje automático del sistema de gestión de incidencias.\n"
+"                                            </p>\n"
+"                                        </td>\n"
+"                                    </tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </table>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-family: Arial, sans-serif;\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"background-color: #f4f4f4; padding: "
+"20px;\">\n"
+"                        <tr>\n"
+"                            <td align=\"center\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"background-color: #ffffff; "
+"border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n"
+"                                    <tr>\n"
+"                                        <td style=\"background-color: #875A7B; padding: 20px; border-radius: 8px 8px 0 0;\">\n"
+"                                            <h1 style=\"color: #ffffff; margin: 0; font-size: 24px;\">\n"
+"                                                New incident assigned\n"
+"                                            </h1>\n"
+"                                        </td>\n"
+"                                    </tr>\n"
+"\n"
+"                                    <tr>\n"
+"                                        <td style=\"padding: 30px;\">\n"
+"                                            <p style=\"font-size: 16px; color: #333333; margin-bottom: 20px;\">\n"
+"                                                Hello <strong>{{ object.technician_id.name }}</strong>,\n"
+"                                            </p>\n"
+"                                            <p style=\"font-size: 14px; color: #666666; margin-bottom: 20px;\">\n"
+"                                                A new incident has been assigned to you. Details:\n"
+"                                            </p>\n"
+"                                            \n"
+"                                            <table border=\"0\" cellpadding=\"8\" cellspacing=\"0\" width=\"100%\" style=\"background-"
+"color: #f9f9f9; border-radius: 4px; margin-bottom: 20px;\">\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555; width: 140px;\">Reference:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.reference }}</td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Title:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.name }}</td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Equipment:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.equipment_id.name or 'Not specified' }}</td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Priority:</td>\n"
+"                                                    <td style=\"color: #333333;\">\n"
+"                                                        {{ {'0': 'Low', '1': 'Normal', '2': 'High', '3': 'Urgent'}.get(object.priority, "
+"'Normal') }}\n"
+"                                                    </td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Status:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.state }}</td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"font-weight: bold; color: #555555;\">Creation date:</td>\n"
+"                                                    <td style=\"color: #333333;\">{{ object.date_created.strftime('%d/%m/%Y %H:%M') if "
+"object.date_created else '' }}</td>\n"
+"                                                </tr>\n"
+"                                            </table>\n"
+"\n"
+"                                            {% if object.description %}\n"
+"                                            <p style=\"font-weight: bold; color: #555555; margin-bottom: 8px;\">Description:</p>\n"
+"                                            <div style=\"background-color: #f0f0f0; padding: 15px; border-radius: 4px; color: #333333; "
+"margin-bottom: 20px;\">\n"
+"                                                {{ object.description }}\n"
+"                                            </div>\n"
+"                                            {% endif %}\n"
+"\n"
+"                                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n"
+"                                                <tr>\n"
+"                                                    <td align=\"center\">\n"
+"                                                        <a href=\"/"
+"web#id=%7B%7B%20object.id%20%7D%7D&amp;model=pcr_incident_manager.incident&amp;view_type=form\" style=\"display: inline-block; background-"
+"color: #875A7B; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold;\">\n"
+"                                                            View incident\n"
+"                                                        </a>\n"
+"                                                    </td>\n"
+"                                                </tr>\n"
+"                                            </table>\n"
+"                                        </td>\n"
+"                                    </tr>\n"
+"\n"
+"                                    <tr>\n"
+"                                        <td style=\"background-color: #f4f4f4; padding: 20px; text-align: center; border-radius: 0 0 8px "
+"8px;\">\n"
+"                                            <p style=\"font-size: 12px; color: #888888; margin: 0;\">\n"
+"                                                This is an automated message from the incident management system.\n"
+"                                            </p>\n"
+"                                        </td>\n"
+"                                    </tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </table>\n"
+"                </div>\n"
+"            "
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "<em>Consejo: Para mejores resultados, incluye una descripción detallada en la incidencia.</em>"
+msgstr "<em>Tip: For best results, include a detailed description in the incident report.</em>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "<em>Ten en cuenta que los límites del plan gratuito de OpenRouter son 50 peticiones por día.</em>"
+msgstr "<em>Note: The OpenRouter free plan limits are 50 requests per day.</em>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid ""
+"<i class=\"fa fa-bolt\"/> \n"
+"                            <strong>Coste:</strong> 1 petición de"
+msgstr ""
+"<i class=\"fa fa-bolt\"/> \n"
+"                            <strong>Cost:</strong> 1 request"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "<i class=\"fa fa-check-circle\"/> <strong>Análisis completado</strong>"
+msgstr "<i class=\"fa fa-check-circle\"/> <strong>Analysis completed</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "<i class=\"fa fa-check-circle\"/> <strong>Sugerencia lista</strong>"
+msgstr "<i class=\"fa fa-check-circle\"/> <strong>Suggestion ready</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "<i class=\"fa fa-exclamation-triangle\"/> <strong>Descripción insuficiente</strong>"
+msgstr "<i class=\"fa fa-exclamation-triangle\"/> <strong>Insufficient description</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "<i class=\"fa fa-exclamation-triangle\"/> <strong>Error</strong>"
+msgstr "<i class=\"fa fa-exclamation-triangle\"/> <strong>Error</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid ""
+"<i class=\"fa fa-info-circle\"/> \n"
+"                            Peticiones restantes:"
+msgstr ""
+"<i class=\"fa fa-info-circle\"/> \n"
+"                            Remaining requests:"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "<i class=\"fa fa-info-circle\"/> Describe la solución antes de marcar como resuelta"
+msgstr "<i class=\"fa fa-info-circle\"/> Describe the solution before marking as resolved"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "<i class=\"fa fa-lightbulb-o\"/> <strong>Sugerencia de solución con IA</strong>"
+msgstr "<i class=\"fa fa-lightbulb-o\"/> <strong>AI solution suggestion</strong>\""
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "<i class=\"fa fa-lightbulb-o\"/> <strong>Sugerencia:</strong>"
+msgstr "<i class=\"fa fa-lightbulb-o\"/> <strong>Suggestion:</strong>\""
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "<i class=\"fa fa-robot\"/> <strong>Análisis con IA</strong>"
+msgstr "<i class=\"fa fa-robot\"/> <strong>AI analysis</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_kanban
+msgid "<span class=\"text-muted\">Código:</span>"
+msgstr "<span class=\"text-muted\">Code:</span>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_kanban
+msgid "<span class=\"text-muted\">Técnico:</span>"
+msgstr "<span class=\"text-muted\">Technician:</span>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid ""
+"<span invisible=\"not has_description\" class=\"text-success\">\n"
+"                                        <i class=\"fa fa-check-circle\"/> Tiene descripción\n"
+"                                    </span>\n"
+"                                    <span invisible=\"has_description\" class=\"text-warning\">\n"
+"                                        <i class=\"fa fa-exclamation-circle\"/> Sin descripción detallada\n"
+"                                    </span>"
+msgstr ""
+"<span invisible=\"not has_description\" class=\"text-success\">\n"
+"                                        <i class=\"fa fa-check-circle\"/> Has description\n"
+"                                    </span>\n"
+"                                    <span invisible=\"has_description\" class=\"text-warning\">\n"
+"                                        <i class=\"fa fa-exclamation-circle\"/> No detailed description\n"
+"                                    </span>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid ""
+"<span invisible=\"not has_equipment\" class=\"text-success\">\n"
+"                                        <i class=\"fa fa-check-circle\"/> Tiene equipo asignado\n"
+"                                    </span>\n"
+"                                    <span invisible=\"has_equipment\" class=\"text-muted\">\n"
+"                                        <i class=\"fa fa-minus-circle\"/> Sin equipo asignado\n"
+"                                    </span>"
+msgstr ""
+"<span invisible=\"not has_equipment\" class=\"text-success\">\n"
+"                                        <i class=\"fa fa-check-circle\"/> Has equipment assigned\n"
+"                                    </span>\n"
+"                                    <span invisible=\"has_equipment\" class=\"text-muted\">\n"
+"                                        <i class=\"fa fa-minus-circle\"/> No equipment assigned\n"
+"                                    </span>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid ""
+"<span invisible=\"not has_types\" class=\"text-success\">\n"
+"                                        <i class=\"fa fa-check-circle\"/> Tiene tipos asignados\n"
+"                                    </span>\n"
+"                                    <span invisible=\"has_types\" class=\"text-muted\">\n"
+"                                        <i class=\"fa fa-minus-circle\"/> Sin tipos asignados\n"
+"                                    </span>"
+msgstr ""
+"<span invisible=\"not has_types\" class=\"text-success\">\n"
+"                                        <i class=\"fa fa-check-circle\"/> Has types assigned\n"
+"                                    </span>\n"
+"                                    <span invisible=\"has_types\" class=\"text-muted\">\n"
+"                                        <i class=\"fa fa-minus-circle\"/> No types assigned\n"
+"                                    </span>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Categoría</strong>"
+msgstr "<strong>Category</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Código</strong>"
+msgstr "<strong>Code</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Descripción</strong>"
+msgstr "<strong>Description</strong>\"}]"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Días abierta:</strong>"
+msgstr "<strong>Days open:</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Equipo:</strong>"
+msgstr "<strong>Equipment:</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Estado:</strong>"
+msgstr "<strong>Status:</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Fecha cierre:</strong>"
+msgstr "<strong>Close date:</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Fecha creación:</strong>"
+msgstr "<strong>Creation date:</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Nombre</strong>"
+msgstr "<strong>Name</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Prioridad:</strong>"
+msgstr "<strong>Priority:</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid ""
+"<strong>Servidor de correo NO configurado</strong><br/>\n"
+"                                            <span>Las notificaciones por correo a técnicos no se enviarán hasta que configures un servidor "
+"de correo de salida</span><br/>\n"
+"                                            <span class=\"text-muted small\">Ve a Ajustes - Técnico - Servidores de correo de salida</span>"
+msgstr ""
+"<strong>Outgoing mail server NOT configured</strong><br/>\n"
+"                                            <span>Email notifications to technicians will not be sent until you configure an outgoing mail "
+"server</span><br/>\n"
+"                                            <span class=\"text-muted small\">Go to Settings - Technician - Outgoing mail servers</span>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid ""
+"<strong>Servidor de correo configurado</strong><br/>\n"
+"                                            <span>Las notificaciones por correo a técnicos están activas</span>"
+msgstr ""
+"<strong>Outgoing mail server configured</strong><br/>\n"
+"                                            <span>Email notifications to technicians are active</span>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "<strong>Sugerir prioridad:</strong> Analiza la incidencia y recomienda una prioridad (1 petición)"
+msgstr "<strong>Suggest priority:</strong> Analyze the incident and recommend a priority (1 request)"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "<strong>Sugerir solución:</strong> Propone pasos para resolver el problema (1 petición)"
+msgstr "<strong>Suggest solution:</strong> Proposes steps to resolve the problem (1 request)"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Tipos:</strong>"
+msgstr "<strong>Types:</strong>"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "<strong>Técnico:</strong>"
+msgstr "<strong>Technician:</strong>"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__state__open
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Abierta"
+msgstr "Open"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_tree
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Abiertas"
+msgstr "Open"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_needaction
+msgid "Acción requerida"
+msgstr "Action Needed"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_ids
+msgid "Actividades"
+msgstr "Activities"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_exception_decoration
+msgid "Decoración excepción actividad"
+msgstr "Activity Exception Decoration"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_state
+msgid "Estado de actividad"
+msgstr "Activity State"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_type_icon
+msgid "Icono tipo de actividad"
+msgstr "Activity Type Icon"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__active
+msgid "Activo"
+msgstr "Active"
+
+#. module: pcr_incident_manager
+#: model:res.groups,name:pcr_incident_manager.group_incident_manager
+msgid "Administrador de incidencias"
+msgstr "Incident Manager"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__warnings
+msgid "Advertencias"
+msgstr "Warnings"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Agrupar por"
+msgstr "Group by"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.action_pcr_config model:ir.ui.menu,name:pcr_incident_manager.menu_pcr_settings
+msgid "Ajustes"
+msgstr "Settings"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__priority__2
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__current_priority__2
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__suggested_priority__2
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Alta"
+msgstr "High"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident_type__impact_level__high
+msgid "Alto"
+msgstr "High"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__state__loading
+msgid "Analizando..."
+msgstr "Analyzing..."
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Analizar con IA (1 petición)"
+msgstr "Analyze with AI (1 request)"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Antiguas (> 7 días)"
+msgstr "Old (> 7 days)"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Análisis de IA"
+msgstr "AI analysis"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_graph
+msgid "Análisis de incidencias"
+msgstr "Incident Analysis"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Aplicar sugerencia"
+msgstr "Apply suggestion"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_assign_technician_wizard
+msgid "Asigna técnico a incidencias"
+msgstr "Assign technician to incidents"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_assign_technician_wizard_tree
+msgid "Asignaciones de técnico"
+msgstr "Technician assignments"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_assign_technician_wizard_form
+msgid "Asignar"
+msgstr "Assign"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_assign_technician_wizard_action
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_assign_technician_wizard_form
+msgid "Asignar técnico"
+msgstr "Assign technician"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_suggest_priority_wizard
+msgid "Asistente de sugerencia de prioridad IA"
+msgstr "AI Priority Suggestion Wizard"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_suggest_solution_wizard
+msgid "Asistente de sugerencia de solución IA"
+msgstr "AI Solution Suggestion Wizard"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_attachment_count
+msgid "Attachment Count"
+msgstr "Attachment Count"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_equipment__state__broken
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_kanban
+msgid "Averiado"
+msgstr "Broken"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+msgid "Averiados"
+msgstr "Broken"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Añade descripción primero"
+msgstr "Add a description first"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Añade más detalles a la descripción de la incidencia para obtener mejores sugerencias."
+msgstr "Add more details to the incident description to get better suggestions."
+
+#. module: pcr_incident_manager
+#: model_terms:ir.actions.act_window,help:pcr_incident_manager.pcr_technician_action
+msgid "Añade tu primer técnico"
+msgstr "Add your first technician"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Añadir a solución"
+msgstr "Add to solution"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__priority__0
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__current_priority__0
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__suggested_priority__0
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Baja"
+msgstr "Low"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident_type__impact_level__low
+msgid "Bajo"
+msgstr "Low"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_calendar
+msgid "Calendario de incidencias"
+msgstr "Incident Calendar"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__readiness_score
+msgid "Calidad de datos"
+msgstr "Data quality"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Calidad de datos para IA"
+msgstr "Data quality for AI"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__state__cancelled
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Cancelada"
+msgstr "Cancelled"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Canceladas"
+msgstr "Cancelled"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_assign_technician_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Cancelar"
+msgstr "Cancel"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__category
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+msgid "Categoría"
+msgstr "Category"
+
+#. module: pcr_incident_manager
+#: model:ir.module.category,description:pcr_incident_manager.module_category_incident_manager
+msgid "Categoría para gestión de incidencias IT"
+msgstr "Category for IT incident management"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__state__closed
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Cerrada"
+msgstr "Closed"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Cerradas"
+msgstr "Closed"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Cerrar"
+msgstr "Close"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Clasificación"
+msgstr "Classification"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Clave API"
+msgstr "API Key"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Clave API de OpenRouter"
+msgstr "OpenRouter API Key"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_config_settings__pcr_openrouter_api_key
+msgid "Clave de OpenRouter"
+msgstr "OpenRouter Key"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Comparación de prioridades"
+msgstr "Priority comparison"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+msgid "Con incidencias abiertas"
+msgstr "With open incidents"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_res_config_settings
+msgid "Ajustes de configuración"
+msgstr "Configuration Settings"
+
+#. module: pcr_incident_manager
+#: model:ir.ui.menu,name:pcr_incident_manager.pcr_incident_menu_config
+msgid "Configuración"
+msgstr "Configuration"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Configuración de IA"
+msgstr "AI Configuration"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__state__confirm
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_solution_wizard__state__confirm
+msgid "Confirmar"
+msgstr "Confirm"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_res_partner
+msgid "Contacto"
+msgstr "Contact"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__email
+msgid "Correo electrónico"
+msgstr "Email"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.actions.act_window,help:pcr_incident_manager.pcr_equipment_action
+msgid "Crea tu primer equipo"
+msgstr "Create your first equipment"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Creadas esta semana"
+msgstr "Created this week"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Creadas este mes"
+msgstr "Created this month"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Creadas hoy"
+msgstr "Created today"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__create_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__create_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__create_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__create_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__create_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__create_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__create_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__create_uid
+msgid "Creado por"
+msgstr "Created by"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__create_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__create_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__create_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__create_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__create_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__create_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__create_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__create_date
+msgid "Creado en"
+msgstr "Created on"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident_type__impact_level__critical
+msgid "Crítico"
+msgstr "Critical"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__code
+msgid "Código interno"
+msgstr "Internal code"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Cómo funciona la IA"
+msgstr "How AI works"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.actions.act_window,help:pcr_incident_manager.pcr_incident_type_action
+msgid "Define los tipos de incidencia"
+msgstr "Define incident types"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Describe como se resolvió..."
+msgstr "Describe how it was resolved..."
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Describe la incidencia..."
+msgstr "Describe the incident..."
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__description
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__description
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__description
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__incident_description
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Descripción"
+msgstr "Description"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_form
+msgid "Descripción del equipo..."
+msgstr "Equipment description..."
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_type_view_form
+msgid "Descripción del tipo..."
+msgstr "Type description..."
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__description_length
+msgid "Longitud de descripción"
+msgstr "Description Length"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__display_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__display_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__display_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__display_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__display_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__display_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__display_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__display_name
+msgid "Nombre mostrado"
+msgstr "Display Name"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Documento generado automáticamente por PCR Incident Manager"
+msgstr "Document automatically generated by PCR Incident Manager"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__days_open
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_tree
+msgid "Días abierta"
+msgstr "Days open"
+
+#. module: pcr_incident_manager
+#: model:ir.model.constraint,message:pcr_incident_manager.constraint_pcr_incident_manager_technician_email_unique
+msgid "El correo ya está registrado para otro técnico"
+msgstr "The email is already registered for another technician"
+
+#. module: pcr_incident_manager
+#: model:ir.model.constraint,message:pcr_incident_manager.constraint_pcr_incident_manager_equipment_code_unique
+msgid "El código del equipo tiene que ser único"
+msgstr "The equipment code must be unique"
+
+#. module: pcr_incident_manager
+#: model:ir.model.constraint,message:pcr_incident_manager.constraint_pcr_incident_manager_equipment_serial_unique
+msgid "El número de serie tiene que ser único"
+msgstr "The serial number must be unique"
+
+#. module: pcr_incident_manager
+#: model:ir.model.constraint,message:pcr_incident_manager.constraint_pcr_incident_manager_incident_name_not_empty
+msgid "El título de la incidencia no puede estar vacío"
+msgstr "The incident title cannot be empty"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.actions.act_window,help:pcr_incident_manager.pcr_incident_action
+msgid "Empieza a gestionar las incidencias de tu organización"
+msgstr "Start managing your organization's incidents"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_equipment__state__maintenance
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+msgid "En mantenimiento"
+msgstr "Under maintenance"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__state__in_progress
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "En proceso"
+msgstr "In progress"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__equipment_id
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Equipo"
+msgstr "Equipment"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_equipment
+msgid "Equipo / Activo"
+msgstr "Equipment / Asset"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_equipment_action
+#: model:ir.ui.menu,name:pcr_incident_manager.pcr_incident_menu_equipment
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.view_partner_form_inherit_smart_button
+msgid "Equipos"
+msgstr "Equipment"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.view_partner_form_inherit_equipment
+msgid "Equipos IT"
+msgstr "IT Equipment"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_partner__equipment_ids
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_users__equipment_ids
+msgid "Equipos asignados"
+msgstr "Assigned equipment"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__state__error
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_solution_wizard__state__error
+msgid "Error"
+msgstr "Error"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__specialty
+msgid "Especialidad"
+msgstr "Specialty"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__state
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__state
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Estado"
+msgstr "Status"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Estado del servidor de correo"
+msgstr "Mail server status"
+
+#. module: pcr_incident_manager
+#: model:ir.model.constraint,message:pcr_incident_manager.constraint_pcr_incident_manager_technician_user_unique
+msgid "Este usuario ya está asignado a otro técnico"
+msgstr "This user is already assigned to another technician"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_assign_technician_wizard_tree
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_tree
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_tree
+msgid "Fecha"
+msgstr "Date"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__purchase_date
+msgid "Fecha de adquisición"
+msgstr "Purchase date"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__date_closed
+msgid "Fecha de cierre"
+msgstr "Close date"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__date_created
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Fecha de creación"
+msgstr "Creation date"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Fechas"
+msgstr "Dates"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_follower_ids
+msgid "Seguidores"
+msgstr "Followers"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_partner_ids
+msgid "Seguidores (Contactos)"
+msgstr "Followers (Partners)"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__image
+msgid "Foto"
+msgstr "Photo"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Funciones disponibles"
+msgstr "Available features"
+
+#. module: pcr_incident_manager
+#: model:ir.module.category,name:pcr_incident_manager.module_category_incident_manager
+#: model:ir.ui.menu,name:pcr_incident_manager.pcr_incident_menu_root
+msgid "Gestión de incidencias IT"
+msgstr "IT Incident Management"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__has_description
+msgid "Tiene descripción"
+msgstr "Has description"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__has_enough_description
+msgid "Tiene descripción suficiente"
+msgstr "Has sufficient description"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__has_equipment
+msgid "Tiene equipo"
+msgstr "Has equipment"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__has_message
+msgid "Tiene mensaje"
+msgstr "Has message"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__has_types
+msgid "Tiene tipos"
+msgstr "Has types"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__id
+msgid "ID"
+msgstr "ID"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_exception_icon
+msgid "Icono"
+msgstr "Icon"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_form
+msgid "Identificación"
+msgstr "Identification"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,help:pcr_incident_manager.field_pcr_incident_manager_incident__message_has_error
+#: model:ir.model.fields,help:pcr_incident_manager.field_pcr_incident_manager_incident__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "If checked, some messages have a delivery error."
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__image
+msgid "Imagen"
+msgstr "Image"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_incident
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__incident_id
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__incident_name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__incident_id
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Incidencia"
+msgstr "Incident"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Incidencia a analizar"
+msgstr "Incident to analyze"
+
+#. module: pcr_incident_manager
+#: model:mail.template,name:pcr_incident_manager.mail_template_incident_assigned
+msgid "Incidencia asignada al técnico"
+msgstr "Incident assigned to technician"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_incident_action
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__incident_ids
+#: model:ir.ui.menu,name:pcr_incident_manager.pcr_incident_menu_incidents
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_tree
+msgid "Incidencias"
+msgstr "Incidents"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__open_incident_count
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_kanban
+msgid "Incidencias abiertas"
+msgstr "Open incidents"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__incident_ids
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_technician_view_form
+msgid "Incidencias asignadas"
+msgstr "Assigned incidents"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__incident_ids
+msgid "Incidencias elegidas"
+msgstr "Selected incidents"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Información"
+msgstr "Information"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Información del equipo"
+msgstr "Equipment information"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.report,name:pcr_incident_manager.action_report_incident
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Informe de incidencia"
+msgstr "Incident report"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Iniciar"
+msgstr "Start"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Ir a configuración"
+msgstr "Go to settings"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_is_follower
+msgid "Es seguidor"
+msgstr "Is follower"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "La IA analizará el problema y sugerirá pasos para resolverlo"
+msgstr "AI will analyze the issue and suggest steps to resolve it"
+
+#. module: pcr_incident_manager
+#: model:ir.model.constraint,message:pcr_incident_manager.constraint_pcr_incident_manager_incident_reference_unique
+msgid "La referencia de la incidencia tiene que ser única"
+msgstr "The incident reference must be unique"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__write_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__write_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__write_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__write_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__write_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__write_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__write_uid
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__write_uid
+msgid "Última actualización por"
+msgstr "Last updated by"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__write_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__write_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__write_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__write_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__write_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__write_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__write_date
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__write_date
+msgid "Última actualización en"
+msgstr "Last updated on"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_config_settings__pcr_ai_daily_limit
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Límite diario de peticiones"
+msgstr "Daily request limit"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Límite por día"
+msgstr "Limit per day"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_kanban
+msgid "Mantenimiento"
+msgstr "Maintenance"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident_type__impact_level__medium
+msgid "Medio"
+msgstr "Medium"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__error_message
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__error_message
+msgid "Mensaje de error"
+msgstr "Error message"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_has_error
+msgid "Error de entrega del mensaje"
+msgstr "Message delivery error"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_ids
+msgid "Mensajes"
+msgstr "Messages"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Muy antiguas (> 30 días)"
+msgstr "Very old (> 30 days)"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__my_activity_date_deadline
+msgid "Fecha límite de mi actividad"
+msgstr "My Activity Deadline"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Mínimo recomendado: 20 caracteres (actual:"
+msgstr "Minimum recommended: 20 characters (current:"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Necesaria para usar las funciones de IA"
+msgstr "Required to use AI features"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Necesitas configurar la clave API de OpenRouter"
+msgstr "You need to configure the OpenRouter API key"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Necesitas configurar la clave API de OpenRouter"
+msgstr "You need to configure the OpenRouter API key"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__needs_config
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__needs_config
+msgid "Requiere configuración"
+msgstr "Needs config"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_date_deadline
+msgid "Fecha límite próxima actividad"
+msgstr "Next Activity Deadline"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_summary
+msgid "Resumen próxima actividad"
+msgstr "Next Activity Summary"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_type_id
+msgid "Tipo próxima actividad"
+msgstr "Next Activity Type"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__impact_level
+msgid "Nivel de impacto"
+msgstr "Impact level"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_ai_service__name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident_type__name
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__name
+msgid "Nombre"
+msgstr "Name"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_form
+msgid "Nombre del equipo"
+msgstr "Equipment name"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_technician_view_form
+msgid "Nombre del técnico"
+msgstr "Technician name"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__priority__1
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__current_priority__1
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__suggested_priority__1
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Normal"
+msgstr "Normal"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Notificaciones por correo"
+msgstr "Email notifications"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_needaction_counter
+msgid "Número de acciones"
+msgstr "Number of Actions"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_has_error_counter
+msgid "Número de errores"
+msgstr "Number of errors"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_partner__equipment_count
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_users__equipment_count
+msgid "Número de equipos"
+msgstr "Number of equipment"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__incident_count
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_partner__incident_count
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_users__incident_count
+msgid "Número de incidencias"
+msgstr "Number of incidents"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__serial_number
+msgid "Número de serie"
+msgstr "Serial number"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Obtener clave API gratis en OpenRouter"
+msgstr "Get a free API key at OpenRouter"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_equipment__state__operative
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_kanban
+msgid "Operativo"
+msgstr "Operational"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+msgid "Operativos"
+msgstr "Operational"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "PCR Incident Manager"
+msgstr "PCR Incident Manager"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Para evitar sobrecostes"
+msgstr "To avoid extra costs"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__remaining_requests
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__remaining_requests
+msgid "Peticiones restantes hoy"
+msgstr "Remaining requests today"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_config_settings__pcr_ai_usage_today
+msgid "Peticiones usadas hoy"
+msgstr "Requests used today"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__priority
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Prioridad"
+msgstr "Priority"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__current_priority
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Prioridad actual"
+msgstr "Current priority"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Prioridad alta"
+msgstr "High priority"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__suggested_priority
+msgid "Prioridad sugerida"
+msgstr "Suggested priority"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Prioridad urgente"
+msgstr "Urgent priority"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Probar conexión"
+msgstr "Test connection"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__incident_name
+msgid "Problema"
+msgstr "Problem"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Problema a analizar"
+msgstr "Problem to analyze"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_equipment_view_search
+msgid "Propietario"
+msgstr "Owner"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment__partner_id
+msgid "Propietario/responsable"
+msgstr "Owner/responsible"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__reason
+msgid "Razón de la sugerencia"
+msgstr "Reason for the suggestion"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Reabrir"
+msgstr "Reopen"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__reference
+msgid "Referencia"
+msgstr "Reference"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.actions.act_window,help:pcr_incident_manager.pcr_equipment_action
+msgid "Registra los equipos y activos de tu organización para gestionar sus incidencias."
+msgstr "Register your organization's equipment and assets to manage their incidents."
+
+#. module: pcr_incident_manager
+#: model_terms:ir.actions.act_window,help:pcr_incident_manager.pcr_incident_action
+msgid "Registra tu incidencia"
+msgstr "Register your incident"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Resetear contador"
+msgstr "Reset counter"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Resolver"
+msgstr "Resolve"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__activity_user_id
+msgid "Usuario responsable"
+msgstr "Responsible user"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__state__resolved
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Resuelta"
+msgstr "Resolved"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Resueltas"
+msgstr "Resolved"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__message_has_sms_error
+msgid "Error de entrega SMS"
+msgstr "SMS Delivery error"
+
+#. module: pcr_incident_manager
+#: model:mail.template,subject:pcr_incident_manager.mail_template_incident_assigned
+msgid "Se te ha asignado la incidencia {{ object.reference }}"
+msgstr "You have been assigned incident {{ object.reference }}"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_ai_service_action
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_ai_service_form
+msgid "Servicio IA"
+msgstr "AI Service"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_ai_service
+msgid "Servicio de IA para análisis de incidencias"
+msgstr "AI service for incident analysis"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_ai_service_tree
+msgid "Servicios IA"
+msgstr "AI Services"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_config_settings__pcr_mail_server_configured
+msgid "Servidor de correo configurado"
+msgstr "Mail server configured"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+msgid "Sin asignar"
+msgstr "Unassigned"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__solution
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Solución"
+msgstr "Solution"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_solution_wizard__state__success
+msgid "Solución lista"
+msgstr "Solution ready"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__suggested_solution
+msgid "Solución sugerida"
+msgstr "Suggested solution"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Solución sugerida por IA"
+msgstr "AI suggested solution"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_priority_wizard__state
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_suggest_solution_wizard__state
+msgid "Estado"
+msgstr "State"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,help:pcr_incident_manager.field_pcr_incident_manager_incident__activity_state
+msgid ""
+"Estado basado en actividades\n"
+"Vencida: La fecha límite ya pasó\n"
+"Hoy: La actividad es para hoy\n"
+"Planificada: Actividades futuras."
+msgstr ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "Sugerencia de prioridad IA"
+msgstr "AI priority suggestion"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Sugerencia de solución IA"
+msgstr "AI solution suggestion"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__state__success
+msgid "Sugerencia lista"
+msgstr "Suggestion ready"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_tree
+msgid "Sugerencias de prioridad"
+msgstr "Priority suggestions"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_tree
+msgid "Sugerencias de solución"
+msgstr "Solution suggestions"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Sugerir prioridad"
+msgstr "Suggest priority"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_suggest_priority_wizard_action
+msgid "Sugerir prioridad (IA)"
+msgstr "Suggest priority (AI)"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Sugerir solución (1 petición)"
+msgstr "Suggest solution (1 request)"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_suggest_solution_wizard_action
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Sugerir solución (IA)"
+msgstr "Suggest solution (AI)"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_pivot
+msgid "Tabla dinámica de incidencias"
+msgstr "Incidents pivot table"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__phone
+msgid "Teléfono"
+msgstr "Phone"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_incident_type
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_type_view_form
+msgid "Tipo de incidencia"
+msgstr "Incident type"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_incident_type_action
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__type_ids
+#: model:ir.ui.menu,name:pcr_incident_manager.pcr_incident_menu_types
+msgid "Tipos de incidencia"
+msgstr "Incident types"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.view_partner_form_inherit_equipment
+msgid "Total de equipos"
+msgstr "Total equipment"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.view_partner_form_inherit_equipment
+msgid "Total de incidencias"
+msgstr "Total incidents"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_technician
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_assign_technician_wizard__technician_id
+#: model:res.groups,name:pcr_incident_manager.group_incident_technician
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_search
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_technician_view_form
+msgid "Técnico"
+msgstr "Technician"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__technician_id
+msgid "Técnico asignado"
+msgstr "Assigned technician"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.pcr_technician_action
+#: model:ir.ui.menu,name:pcr_incident_manager.pcr_incident_menu_technicians
+msgid "Técnicos"
+msgstr "Technicians"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_incident__name
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "Título"
+msgstr "Title"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Título de la incidencia"
+msgstr "Incident title"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_incident__priority__3
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__current_priority__3
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_suggest_priority_wizard__suggested_priority__3
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Urgente"
+msgstr "Urgent"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "Usa 1 petición de IA"
+msgstr "Uses 1 AI request"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.res_config_settings_view_form_pcr_settings
+msgid "Usadas hoy"
+msgstr "Used today"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_technician__user_id
+msgid "Usuario del sistema"
+msgstr "System user"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.view_partner_form_inherit_equipment
+msgid "Ver equipos"
+msgstr "View equipment"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.view_partner_form_inherit_equipment
+msgid "Ver incidencias"
+msgstr "View incidents"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_kanban
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "días"
+msgstr "days"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_solution_wizard_form
+msgid "restantes hoy"
+msgstr "remaining today"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_suggest_priority_wizard_form
+msgid "¿Analizar esta incidencia para sugerir una prioridad?"
+msgstr "Analyze this incident to suggest a priority?"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.pcr_incident_view_form
+msgid "¿Seguro que deseas cancelar esta incidencia?"
+msgstr "Are you sure you want to cancel this incident?"
+
+#. module: pcr_incident_manager
+#: model_terms:ir.ui.view,arch_db:pcr_incident_manager.report_incident_template
+msgid "Escanea para abrir"
+msgstr "Scan to open"
+
+#. module: pcr_incident_manager
+#: model:ir.model,name:pcr_incident_manager.model_pcr_incident_manager_equipment_category
+msgid "Categoría de equipo"
+msgstr "Equipment Category"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment_category__child_id
+msgid "Subcategorías"
+msgstr "Subcategories"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment_category__is_it_equipment
+msgid "Equipo IT"
+msgstr "IT Equipment"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_pcr_incident_manager_equipment_category__maintenance_frequency
+msgid "Frecuencia de mantenimiento"
+msgstr "Maintenance Frequency"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_equipment_category__maintenance_frequency__monthly
+msgid "Mensual"
+msgstr "Monthly"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_equipment_category__maintenance_frequency__quarterly
+msgid "Trimestral"
+msgstr "Quarterly"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_equipment_category__maintenance_frequency__biannual
+msgid "Semestral"
+msgstr "Biannual"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__pcr_incident_manager_equipment_category__maintenance_frequency__annual
+msgid "Anual"
+msgstr "Annual"
+
+#. module: pcr_incident_manager
+#: model:ir.actions.act_window,name:pcr_incident_manager.action_pcr_equipment_category
+msgid "Categorías de equipo"
+msgstr "Equipment Categories"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,help:pcr_incident_manager.field_pcr_incident_manager_equipment_category__is_it_equipment
+msgid "Indica si es una categoría de equipos informáticos"
+msgstr "Indicates if this is an IT equipment category"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields.selection,name:pcr_incident_manager.selection__res_config_settings__pcr_ai_model_mode__custom
+msgid "Modelo personalizado"
+msgstr "Custom Model"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_config_settings__pcr_ai_model_mode
+msgid "Modo de selección de modelo"
+msgstr "Model Selection Mode"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_config_settings__pcr_ai_custom_model
+msgid "Modelo personalizado"
+msgstr "Custom Model"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,field_description:pcr_incident_manager.field_res_config_settings__pcr_ai_allow_paid
+msgid "Permitir modelos de pago"
+msgstr "Allow Paid Models"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,help:pcr_incident_manager.field_res_config_settings__pcr_ai_model_mode
+msgid "Automático usa modelos gratuitos con fallback. Personalizado permite elegir un modelo específico."
+msgstr "Automatic uses free models with fallback. Custom allows choosing a specific model."
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,help:pcr_incident_manager.field_res_config_settings__pcr_ai_custom_model
+msgid "Nombre del modelo de OpenRouter (ej: openai/gpt-4o-mini, anthropic/claude-3-haiku). Consulta https://openrouter.ai/models"
+msgstr "Name of the OpenRouter model (e.g., openai/gpt-4o-mini, anthropic/claude-3-haiku). See https://openrouter.ai/models"
+
+#. module: pcr_incident_manager
+#: model:ir.model.fields,help:pcr_incident_manager.field_res_config_settings__pcr_ai_allow_paid
+msgid "¡CUIDADO! Si activas esto y usas un modelo de pago, se cargará a tu cuenta de OpenRouter."
+msgstr "WARNING! If you enable this and use a paid model, it will be charged to your OpenRouter account."

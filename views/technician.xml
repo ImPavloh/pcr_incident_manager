@@ -1,0 +1,117 @@
+<odoo>
+    <data>
+        <!-- Vista tree tecnicos -->
+        <record id="pcr_technician_view_tree" model="ir.ui.view">
+            <field name="name">pcr.technician.tree</field>
+            <field name="model">pcr_incident_manager.technician</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image', 'size': [128, 128]}"/>
+                    <field name="name"/>
+                    <field name="specialty"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista form tecnicos -->
+        <record id="pcr_technician_view_form" model="ir.ui.view">
+            <field name="name">pcr.technician.form</field>
+            <field name="model">pcr_incident_manager.technician</field>
+            <field name="arch" type="xml">
+                <form string="Técnico">
+                    <sheet>
+                        <field name="image"
+                            widget="image"
+                            class="oe_avatar"
+                            options="{'preview_image': 'image', 'size': [128, 128]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre del técnico"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="specialty"/>
+                                <field name="user_id"/>
+                            </group>
+                            <group>
+                                <field name="email"/>
+                                <field name="phone"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Incidencias asignadas">
+                                <field name="incident_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="equipment_id"/>
+                                        <field name="priority" widget="priority"/>
+                                        <field name="state" widget="badge"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- vista Kanban tecnicos -->
+        <record id="pcr_technician_view_kanban" model="ir.ui.view">
+            <field name="name">pcr.technician.kanban</field>
+            <field name="model">pcr_incident_manager.technician</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="specialty"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="image" preview_image="image"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <div class="o_kanban_image me-2">
+                                    <img t-att-src="kanban_image('pcr_incident_manager.technician', 'image', record.id.raw_value)" 
+                                         class="o_kanban_image_fill_left" alt="Foto técnico"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div t-if="record.specialty.value">
+                                            <span class="badge bg-info"><field name="specialty"/></span>
+                                        </div>
+                                        <div t-if="record.email.value" class="text-muted small mt-1">
+                                            <i class="fa fa-envelope" title="Correo electrónico"/> <field name="email"/>
+                                        </div>
+                                        <div t-if="record.phone.value" class="text-muted small">
+                                            <i class="fa fa-phone" title="Teléfono"/> <field name="phone"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Acción técnicos -->
+        <record id="pcr_technician_action" model="ir.actions.act_window">
+            <field name="name">Técnicos</field>
+            <field name="res_model">pcr_incident_manager.technician</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Añade tu primer técnico
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

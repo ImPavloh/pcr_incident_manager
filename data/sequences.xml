@@ -1,0 +1,13 @@
+<odoo>
+    <data noupdate="1">
+        <!-- secuencia para incidencias -->
+        <record id="seq_pcr_incident" model="ir.sequence">
+            <field name="name">Secuencia incidencias</field>
+            <field name="code">pcr_incident_manager.incident</field>
+            <field name="prefix">INC-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

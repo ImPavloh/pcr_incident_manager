@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <!-- Vista tree tipos -->
+        <record id="pcr_incident_type_view_tree" model="ir.ui.view">
+            <field name="name">pcr.incident.type.tree</field>
+            <field name="model">pcr_incident_manager.incident.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="impact_level" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista form tipos -->
+        <record id="pcr_incident_type_view_form" model="ir.ui.view">
+            <field name="name">pcr.incident.type.form</field>
+            <field name="model">pcr_incident_manager.incident.type</field>
+            <field name="arch" type="xml">
+                <form string="Tipo de incidencia">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="impact_level"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" placeholder="Descripción del tipo..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción tipos -->
+        <record id="pcr_incident_type_action" model="ir.actions.act_window">
+            <field name="name">Tipos de incidencia</field>
+            <field name="res_model">pcr_incident_manager.incident.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Define los tipos de incidencia
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

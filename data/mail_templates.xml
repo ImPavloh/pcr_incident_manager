@@ -1,0 +1,104 @@
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_incident_assigned" model="mail.template">
+            <field name="name">Incidencia asignada al técnico</field>
+            <field name="model_id" ref="model_pcr_incident_manager_incident"/>
+            <field name="subject">Se te ha asignado la incidencia {{ object.reference }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="email_to">{{ object.technician_id.email or (object.technician_id.user_id.email if object.technician_id.user_id else '') }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-family: Arial, sans-serif;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f4; padding: 20px;">
+                        <tr>
+                            <td align="center">
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    <!-- header -->
+                                    <tr>
+                                        <td style="background-color: #875A7B; padding: 20px; border-radius: 8px 8px 0 0;">
+                                            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">
+                                                Nueva incidencia asignada
+                                            </h1>
+                                        </td>
+                                    </tr>
+
+                                    <!-- body -->
+                                    <tr>
+                                        <td style="padding: 30px;">
+                                            <p style="font-size: 16px; color: #333333; margin-bottom: 20px;">
+                                                Hola <strong>{{ object.technician_id.name }}</strong>,
+                                            </p>
+                                            <p style="font-size: 14px; color: #666666; margin-bottom: 20px;">
+                                                Se te ha asignado una nueva incidencia. Detalles:
+                                            </p>
+                                            
+                                            <!-- detalles de la incidencia -->
+                                            <table border="0" cellpadding="8" cellspacing="0" width="100%" style="background-color: #f9f9f9; border-radius: 4px; margin-bottom: 20px;">
+                                                <tr>
+                                                    <td style="font-weight: bold; color: #555555; width: 140px;">Referencia:</td>
+                                                    <td style="color: #333333;">{{ object.reference }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold; color: #555555;">Título:</td>
+                                                    <td style="color: #333333;">{{ object.name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold; color: #555555;">Equipo:</td>
+                                                    <td style="color: #333333;">{{ object.equipment_id.name or 'No especificado' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold; color: #555555;">Prioridad:</td>
+                                                    <td style="color: #333333;">
+                                                        {{ {'0': 'Baja', '1': 'Normal', '2': 'Alta', '3': 'Urgente'}.get(object.priority, 'Normal') }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold; color: #555555;">Estado:</td>
+                                                    <td style="color: #333333;">{{ object.state }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold; color: #555555;">Fecha creación:</td>
+                                                    <td style="color: #333333;">{{ object.date_created.strftime('%d/%m/%Y %H:%M') if object.date_created else '' }}</td>
+                                                </tr>
+                                            </table>
+
+                                            <!-- descripción -->
+                                            {% if object.description %}
+                                            <p style="font-weight: bold; color: #555555; margin-bottom: 8px;">Descripción:</p>
+                                            <div style="background-color: #f0f0f0; padding: 15px; border-radius: 4px; color: #333333; margin-bottom: 20px;">
+                                                {{ object.description }}
+                                            </div>
+                                            {% endif %}
+
+                                            <!-- botón de acción -->
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tr>
+                                                    <td align="center">
+                                                        <a href="/web#id={{ object.id }}&amp;model=pcr_incident_manager.incident&amp;view_type=form" 
+                                                        style="display: inline-block; background-color: #875A7B; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                                                            Ver incidencia
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- footer -->
+                                    <tr>
+                                        <td style="background-color: #f4f4f4; padding: 20px; text-align: center; border-radius: 0 0 8px 8px;">
+                                            <p style="font-size: 12px; color: #888888; margin: 0;">
+                                                Este es un mensaje automático del sistema de gestión de incidencias.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">{{ object.technician_id.user_id.lang if object.technician_id.user_id else 'es_ES' }}</field>
+        </record>
+    </data>
+</odoo>

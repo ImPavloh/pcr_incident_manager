@@ -1,0 +1,148 @@
+<odoo>
+    <!-- vista de config que hereda de res.config.settings -->
+    <record id="res_config_settings_view_form_pcr_settings" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.pcr.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="PCR Incident Manager" string="PCR Incident Manager" name="pcr_incident_manager">
+                    <block title="Notificaciones por correo" name="mail_config">
+                        <setting string="Estado del servidor de correo">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <div class="col-12">
+                                        <div invisible="pcr_mail_server_configured" class="alert alert-warning mb-0" role="alert">
+                                            <strong>Servidor de correo NO configurado</strong><br/>
+                                            <span>Las notificaciones por correo a técnicos no se enviarán hasta que configures un servidor de correo de salida</span><br/>
+                                            <span class="text-muted small">Ve a Ajustes - Técnico - Servidores de correo de salida</span>
+                                        </div>
+                                        <div invisible="not pcr_mail_server_configured" class="alert alert-success mb-0" role="alert">
+                                            <strong>Servidor de correo configurado</strong><br/>
+                                            <span>Las notificaciones por correo a técnicos están activas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <field name="pcr_mail_server_configured" invisible="1"/>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Configuración de IA" name="ai_config">
+                        <setting string="Clave API de OpenRouter" help="Necesaria para usar las funciones de IA">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="pcr_openrouter_api_key" string="Clave API" class="col-3 o_light_label"/>
+                                    <field name="pcr_openrouter_api_key" class="col-9" password="True"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3"/>
+                                    <div class="col-9 text-muted small">
+                                        <a href="https://openrouter.ai/keys" target="_blank" class="alert-link">
+                                            Obtener clave API gratis en OpenRouter
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-3"/>
+                                    <div class="col-9">
+                                        <button name="action_test_ai_connection" type="object" 
+                                                string="Probar conexión" class="btn btn-secondary"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </setting>
+                        
+                        <setting string="Límite diario de peticiones" help="Para evitar sobrecostes">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="pcr_ai_daily_limit" string="Límite por día" class="col-3 o_light_label"/>
+                                    <field name="pcr_ai_daily_limit" class="col-2"/>
+                                </div>
+                                <div class="row mt8">
+                                    <label for="pcr_ai_usage_today" string="Usadas hoy" class="col-3 o_light_label"/>
+                                    <field name="pcr_ai_usage_today" class="col-2" readonly="1"/>
+                                    <div class="col-7">
+                                        <button name="action_reset_ai_usage" type="object" 
+                                                string="Resetear contador" class="btn btn-link"/>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-9 text-muted small">
+                                        <em>Ten en cuenta que los límites del plan gratuito de OpenRouter son 50 peticiones por día.</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </setting>
+                        
+                        <setting string="Modelo de IA" help="Selecciona qué modelo usar para las sugerencias">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="pcr_ai_model_mode" string="Modo" class="col-3 o_light_label"/>
+                                    <field name="pcr_ai_model_mode" class="col-9"/>
+                                </div>
+                                <div class="row mt8" invisible="pcr_ai_model_mode != 'custom'">
+                                    <label for="pcr_ai_custom_model" string="Modelo" class="col-3 o_light_label"/>
+                                    <field name="pcr_ai_custom_model" class="col-9" 
+                                           placeholder="ej: meta-llama/llama-3.2-3b-instruct:free"/>
+                                </div>
+                                <div class="row mt8" invisible="pcr_ai_model_mode != 'custom'">
+                                    <div class="col-3"/>
+                                    <div class="col-9">
+                                        <field name="pcr_ai_allow_paid"/>
+                                        <label for="pcr_ai_allow_paid" string="Permitir modelos de pago"/>
+                                    </div>
+                                </div>
+                                <div class="row mt8" invisible="pcr_ai_model_mode != 'custom'">
+                                    <div class="col-3"/>
+                                    <div class="col-9">
+                                        <div invisible="not pcr_ai_allow_paid" class="alert alert-warning mb-0" role="alert">
+                                            <strong>¡Atención!</strong> Los modelos de pago se cargarán a tu cuenta de OpenRouter.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-3"/>
+                                    <div class="col-9 text-muted small">
+                                        <a href="https://openrouter.ai/models" target="_blank">
+                                            Ver modelos disponibles en OpenRouter
+                                        </a>
+                                        <br/>
+                                        <em>Los modelos gratuitos terminan en :free (ej: qwen/qwen3-4b:free)</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                
+                    <block title="Cómo funciona la IA" name="ai_info">
+                        <setting string="Funciones disponibles">
+                            <div class="content-group text-muted">
+                                <p><strong>Sugerir prioridad:</strong> Analiza la incidencia y recomienda una prioridad (1 petición)</p>
+                                <p><strong>Sugerir solución:</strong> Propone pasos para resolver el problema (1 petición)</p>
+                                <p class="mt16"><em>Consejo: Para mejores resultados, incluye una descripción detallada en la incidencia.</em></p>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- acción para abrir config -->
+    <record id="action_pcr_config" model="ir.actions.act_window">
+        <field name="name">Ajustes</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'pcr_incident_manager', 'bin_size': False}</field>
+    </record>
+
+    <!-- menu en configuración del módulo -->
+    <menuitem id="menu_pcr_settings"
+        name="Ajustes"
+        parent="pcr_incident_menu_config"
+        action="action_pcr_config"
+        sequence="30"/>
+</odoo>

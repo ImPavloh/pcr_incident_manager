@@ -1,0 +1,78 @@
+<odoo>
+    <data>
+        <!-- Los técnicos solo ven incidencias asignadas a ellos -->
+        <record id="rule_incident_technician" model="ir.rule">
+            <field name="name">Técnico: Solo sus incidencias asignadas</field>
+            <field name="model_id" ref="model_pcr_incident_manager_incident"/>
+            <field name="domain_force">[
+                '|',
+                ('technician_id.user_id', '=', user.id),
+                ('technician_id', '=', False)
+            ]</field>
+            <field name="groups" eval="[(4, ref('group_incident_technician'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Los admin ven todas las incidencias -->
+        <record id="rule_incident_manager" model="ir.rule">
+            <field name="name">Admin: Acceso total a incidencias</field>
+            <field name="model_id" ref="model_pcr_incident_manager_incident"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_incident_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Los técnicos solo pueden ver su propio registro de técnico -->
+        <record id="rule_technician_own" model="ir.rule">
+            <field name="name">Técnico: Solo ver su propio perfil</field>
+            <field name="model_id" ref="model_pcr_incident_manager_technician"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_incident_technician'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Los admin ven todos los técnicos -->
+        <record id="rule_technician_manager" model="ir.rule">
+            <field name="name">Admin: Acceso total a técnicos</field>
+            <field name="model_id" ref="model_pcr_incident_manager_technician"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_incident_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Todos pueden ver pero solo admins pueden crear/eliminar -->
+        <record id="rule_equipment_technician" model="ir.rule">
+            <field name="name">Técnico: Solo lectura de equipos</field>
+            <field name="model_id" ref="model_pcr_incident_manager_equipment"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_incident_technician'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_equipment_manager" model="ir.rule">
+            <field name="name">Admin: Acceso total a equipos</field>
+            <field name="model_id" ref="model_pcr_incident_manager_equipment"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_incident_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

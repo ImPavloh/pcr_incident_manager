@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <!-- Categoría para agrupar los grupos -->
+        <record id="module_category_incident_manager" model="ir.module.category">
+            <field name="name">Gestión de incidencias IT</field>
+            <field name="description">Categoría para gestión de incidencias IT</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Técnico (puede ver y gestionar sus propias incidencias) -->
+        <record id="group_incident_technician" model="res.groups">
+            <field name="name">Técnico</field>
+            <field name="category_id" ref="module_category_incident_manager"/>
+            <field name="comment">
+                Puede ver y gestionar solo las incidencias que tiene asignadas.
+                Acceso limitado a equipos y tipos de incidencia.
+            </field>
+        </record>
+
+        <!-- Administrador (acceso completo) -->
+        <record id="group_incident_manager" model="res.groups">
+            <field name="name">Administrador de incidencias</field>
+            <field name="category_id" ref="module_category_incident_manager"/>
+            <field name="implied_ids" eval="[(4, ref('group_incident_technician'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="comment">
+                Acceso completo a todas las incidencias, equipos, técnicos y configuración.
+                Puede ver estadísticas y reportes globales.
+            </field>
+        </record>
+    </data>
+</odoo>

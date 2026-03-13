@@ -1,0 +1,292 @@
+<odoo>
+    <data>
+        <!-- Servicio IA -->
+        <record id="ai_service_default" model="pcr_incident_manager.ai.service">
+            <field name="name">Servicio IA OpenRouter</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- Técnicos -->
+        <record id="technician_carlos" model="pcr_incident_manager.technician">
+            <field name="name">Carlos García</field>
+            <field name="specialty">Servidores y redes</field>
+            <field name="email">carlos.garcia@empresa.com</field>
+            <field name="phone">612345678</field>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/tech_carlos.webp"/>
+        </record>
+        <record id="technician_pablo" model="pcr_incident_manager.technician">
+            <field name="name">Pablo Sanchez</field>
+            <field name="specialty">Software y sistemas operativos</field>
+            <field name="email">pablo.sanchez@empresa.com</field>
+            <field name="phone">623456789</field>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/tech_pablo.webp"/>
+        </record>
+        <record id="technician_pedro" model="pcr_incident_manager.technician">
+            <field name="name">Pedro Casado</field>
+            <field name="specialty">Hardware y periféricos</field>
+            <field name="email">pedro.casado@empresa.com</field>
+            <field name="phone">634567890</field>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/tech_pedro.webp"/>
+        </record>
+
+        <!-- Tipos de incidencia -->
+        <record id="type_hardware" model="pcr_incident_manager.incident.type">
+            <field name="name">Hardware</field>
+            <field name="description">Problemas con componentes físicos</field>
+            <field name="impact_level">high</field>
+        </record>
+        <record id="type_software" model="pcr_incident_manager.incident.type">
+            <field name="name">Software</field>
+            <field name="description">Errores en aplicaciones o sistema operativo</field>
+            <field name="impact_level">medium</field>
+        </record>
+        <record id="type_network" model="pcr_incident_manager.incident.type">
+            <field name="name">Red</field>
+            <field name="description">Problemas de conectividad</field>
+            <field name="impact_level">high</field>
+        </record>
+        <record id="type_printer" model="pcr_incident_manager.incident.type">
+            <field name="name">Impresora</field>
+            <field name="description">Problemas con impresoras</field>
+            <field name="impact_level">low</field>
+        </record>
+        <record id="type_security" model="pcr_incident_manager.incident.type">
+            <field name="name">Seguridad</field>
+            <field name="description">Incidentes de seguridad informática</field>
+            <field name="impact_level">critical</field>
+        </record>
+
+        <!-- Contactos/empresas para asociar equipos -->
+        <record id="partner_it_department" model="res.partner">
+            <field name="name">Departamento de IT</field>
+            <field name="company_type">company</field>
+            <field name="email">it@empresa.com</field>
+            <field name="phone">900123456</field>
+        </record>
+        <record id="partner_direccion" model="res.partner">
+            <field name="name">Dirección general</field>
+            <field name="company_type">company</field>
+            <field name="email">direccion@empresa.com</field>
+        </record>
+        <record id="partner_recepcion" model="res.partner">
+            <field name="name">Recepción</field>
+            <field name="email">recepcion@empresa.com</field>
+        </record>
+        <record id="partner_administracion" model="res.partner">
+            <field name="name">Administración</field>
+            <field name="company_type">company</field>
+            <field name="email">admin@empresa.com</field>
+        </record>
+
+        <!-- Categorías de equipo -->
+        <record id="category_hardware" model="pcr_incident_manager.equipment_category">
+            <field name="name">Hardware</field>
+            <field name="is_it_equipment">True</field>
+            <field name="maintenance_frequency">annual</field>
+        </record>
+        <record id="category_servidores" model="pcr_incident_manager.equipment_category">
+            <field name="name">Servidores</field>
+            <field name="parent_id" ref="category_hardware"/>
+            <field name="is_it_equipment">True</field>
+            <field name="maintenance_frequency">quarterly</field>
+        </record>
+        <record id="category_ordenadores" model="pcr_incident_manager.equipment_category">
+            <field name="name">Ordenadores</field>
+            <field name="parent_id" ref="category_hardware"/>
+            <field name="is_it_equipment">True</field>
+            <field name="maintenance_frequency">annual</field>
+        </record>
+        <record id="category_portatiles" model="pcr_incident_manager.equipment_category">
+            <field name="name">Portátiles</field>
+            <field name="parent_id" ref="category_ordenadores"/>
+            <field name="is_it_equipment">True</field>
+            <field name="maintenance_frequency">annual</field>
+        </record>
+        <record id="category_perifericos" model="pcr_incident_manager.equipment_category">
+            <field name="name">Periféricos</field>
+            <field name="parent_id" ref="category_hardware"/>
+            <field name="is_it_equipment">True</field>
+            <field name="maintenance_frequency">biannual</field>
+        </record>
+        <record id="category_impresoras" model="pcr_incident_manager.equipment_category">
+            <field name="name">Impresoras</field>
+            <field name="parent_id" ref="category_perifericos"/>
+            <field name="is_it_equipment">True</field>
+            <field name="maintenance_frequency">quarterly</field>
+        </record>
+        <record id="category_red" model="pcr_incident_manager.equipment_category">
+            <field name="name">Equipos de red</field>
+            <field name="parent_id" ref="category_hardware"/>
+            <field name="is_it_equipment">True</field>
+            <field name="maintenance_frequency">biannual</field>
+        </record>
+
+        <!-- Equipos -->
+        <record id="equipment_server01" model="pcr_incident_manager.equipment">
+            <field name="name">Servidor principal</field>
+            <field name="description">Servidor de producción Dell PowerEdge R740</field>
+            <field name="code">SRV-2024-001</field>
+            <field name="serial_number">DELL-R740-SN-2024001</field>
+            <field name="purchase_date">2024-01-15</field>
+            <field name="category">Servidor</field>
+            <field name="category_id" ref="category_servidores"/>
+            <field name="state">operative</field>
+            <field name="partner_id" ref="partner_it_department"/>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/server.webp"/>
+        </record>
+        <record id="equipment_pc_recepcion" model="pcr_incident_manager.equipment">
+            <field name="name">PC recepción</field>
+            <field name="description">Ordenador de mesa HP ProDesk 400</field>
+            <field name="code">PC-2024-010</field>
+            <field name="serial_number">HP-PD400-SN-2024010</field>
+            <field name="purchase_date">2024-02-20</field>
+            <field name="category">Ordenador</field>
+            <field name="category_id" ref="category_ordenadores"/>
+            <field name="state">operative</field>
+            <field name="partner_id" ref="partner_recepcion"/>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/computer.webp"/>
+        </record>
+        <record id="equipment_laptop_direccion" model="pcr_incident_manager.equipment">
+            <field name="name">Portátil dirección</field>
+            <field name="description">Portátil Lenovo ThinkPad</field>
+            <field name="code">LPT-2024-005</field>
+            <field name="serial_number">LNV-TP-SN-2024005</field>
+            <field name="purchase_date">2024-03-10</field>
+            <field name="category">Portátil</field>
+            <field name="category_id" ref="category_portatiles"/>
+            <field name="state">operative</field>
+            <field name="partner_id" ref="partner_direccion"/>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/laptop.webp"/>
+        </record>
+        <record id="equipment_printer_office" model="pcr_incident_manager.equipment">
+            <field name="name">Impresora oficina</field>
+            <field name="description">Impresora multifunción HP LaserJet Pro</field>
+            <field name="code">PRN-2024-003</field>
+            <field name="serial_number">HP-LJ-SN-2024003</field>
+            <field name="purchase_date">2023-11-05</field>
+            <field name="category">Impresora</field>
+            <field name="category_id" ref="category_impresoras"/>
+            <field name="state">maintenance</field>
+            <field name="partner_id" ref="partner_administracion"/>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/printer.webp"/>
+        </record>
+        <record id="equipment_switch_red" model="pcr_incident_manager.equipment">
+            <field name="name">Switch principal</field>
+            <field name="description">Switch de red Cisco Catalyst 2960</field>
+            <field name="code">NET-2024-001</field>
+            <field name="serial_number">CISCO-C2960-SN-2024001</field>
+            <field name="purchase_date">2023-06-15</field>
+            <field name="category">Red</field>
+            <field name="category_id" ref="category_red"/>
+            <field name="state">operative</field>
+            <field name="partner_id" ref="partner_it_department"/>
+            <field name="image" type="base64" file="pcr_incident_manager/static/img/switch.webp"/>
+        </record>
+
+        <!-- Incidencias -->
+        <record id="incident_01" model="pcr_incident_manager.incident">
+            <field name="name">Servidor no responde</field>
+            <field name="description">El servidor principal no responde a las peticiones. Los usuarios no pueden acceder a las aplicaciones.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=2))"/>
+            <field name="equipment_id" ref="equipment_server01"/>
+            <field name="technician_id" ref="technician_carlos"/>
+            <field name="priority">3</field>
+            <field name="state">in_progress</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_hardware'), ref('type_network')])]"/>
+        </record>
+        <record id="incident_02" model="pcr_incident_manager.incident">
+            <field name="name">PC lento en recepción</field>
+            <field name="description">El ordenador de recepción tarda mucho en arrancar y las aplicaciones van muy lentas.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=10))"/>
+            <field name="equipment_id" ref="equipment_pc_recepcion"/>
+            <field name="priority">1</field>
+            <field name="state">open</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_software')])]"/>
+        </record>
+        <record id="incident_03" model="pcr_incident_manager.incident">
+            <field name="name">Impresora no imprime</field>
+            <field name="description">La impresora de oficina no imprime. Aparece error de atasco de papel pero no hay papel atascado.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=5))"/>
+            <field name="date_closed" eval="(DateTime.now() - relativedelta(days=3))"/>
+            <field name="equipment_id" ref="equipment_printer_office"/>
+            <field name="technician_id" ref="technician_pablo"/>
+            <field name="priority">1</field>
+            <field name="state">resolved</field>
+            <field name="solution">Se limpió el sensor de papel y se reinició la impresora. Funciona correctamente.</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_printer'), ref('type_hardware')])]"/>
+        </record>
+        <record id="incident_04" model="pcr_incident_manager.incident">
+            <field name="name">Portátil con pantalla azul</field>
+            <field name="description">El portátil de dirección muestra pantalla azul de error al iniciar Windows.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=3))"/>
+            <field name="equipment_id" ref="equipment_laptop_direccion"/>
+            <field name="technician_id" ref="technician_pedro"/>
+            <field name="priority">2</field>
+            <field name="state">in_progress</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_software'), ref('type_hardware')])]"/>
+        </record>
+        <record id="incident_05" model="pcr_incident_manager.incident">
+            <field name="name">Sin conexión a internet</field>
+            <field name="description">Varios usuarios dicen que no tienen conexión a internet desde sus equipos.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=15))"/>
+            <field name="equipment_id" ref="equipment_switch_red"/>
+            <field name="priority">3</field>
+            <field name="state">open</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_network')])]"/>
+        </record>
+        <record id="incident_06" model="pcr_incident_manager.incident">
+            <field name="name">Posible virus detectado</field>
+            <field name="description">El antivirus ha detectado comportamiento sospechoso en el PC de recepción. Posible malware.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=1))"/>
+            <field name="equipment_id" ref="equipment_pc_recepcion"/>
+            <field name="technician_id" ref="technician_carlos"/>
+            <field name="priority">3</field>
+            <field name="state">open</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_security'), ref('type_software')])]"/>
+        </record>
+
+        <record id="incident_07" model="pcr_incident_manager.incident">
+            <field name="name">Monitor con parpadeo</field>
+            <field name="description">El monitor parpadea intermitentemente y se apaga por breves segundos.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=0))"/>
+            <field name="equipment_id" ref="equipment_pc_recepcion"/>
+            <field name="priority">0</field>
+            <field name="state">open</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_hardware')])]"/>
+        </record>
+
+        <record id="incident_08" model="pcr_incident_manager.incident">
+            <field name="name">Backup diario fallando</field>
+            <field name="description">Las copias de seguridad programadas no terminan correctamente y faltan archivos recientes.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=4))"/>
+            <field name="date_closed" eval="(DateTime.now() - relativedelta(days=1))"/>
+            <field name="equipment_id" ref="equipment_server01"/>
+            <field name="technician_id" ref="technician_pablo"/>
+            <field name="priority">2</field>
+            <field name="state">resolved</field>
+            <field name="solution">Se ajustó el script de backup y se verificaron permisos; backups completados correctamente.</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_software'), ref('type_security')])]"/>
+        </record>
+
+        <record id="incident_09" model="pcr_incident_manager.incident">
+            <field name="name">Impresora sin tóner</field>
+            <field name="description">La impresora muestra nivel de tóner bajo y no imprime páginas a color.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(days=7))"/>
+            <field name="equipment_id" ref="equipment_printer_office"/>
+            <field name="priority">1</field>
+            <field name="state">cancelled</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_printer')])]"/>
+        </record>
+
+        <record id="incident_10" model="pcr_incident_manager.incident">
+            <field name="name">Actualización crítica del sistema</field>
+            <field name="description">Necesidad de aplicar actualización crítica de seguridad en servidor que requiere reinicio programado.</field>
+            <field name="date_created" eval="(DateTime.now() - relativedelta(hours=12))"/>
+            <field name="equipment_id" ref="equipment_server01"/>
+            <field name="technician_id" ref="technician_pablo"/>
+            <field name="priority">3</field>
+            <field name="state">in_progress</field>
+            <field name="type_ids" eval="[(6, 0, [ref('type_software'), ref('type_security')])]"/>
+        </record>
+    </data>
+</odoo>

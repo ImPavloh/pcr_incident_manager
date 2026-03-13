@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Report shortcut (para compatibilidad) -->
+        <report
+            id="report_incident_shortcut"
+            model="pcr_incident_manager.incident"
+            string="Informe de incidencia (alternativo)"
+            report_type="qweb-pdf"
+            name="pcr_incident_manager.report_incident_template"
+            file="pcr_incident_manager.report_incident_template"
+            print_report_name="'Incidencia_%s' % object.reference"
+        />
+
+        <!-- Acción principal -->
+        <record id="action_report_incident" model="ir.actions.report">
+            <field name="name">Informe de incidencia</field>
+            <field name="model">pcr_incident_manager.incident</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pcr_incident_manager.report_incident_template</field>
+            <field name="report_file">pcr_incident_manager.report_incident_template</field>
+            <field name="print_report_name">'Incidencia_%s' % object.reference</field>
+            <field name="binding_model_id" ref="pcr_incident_manager.model_pcr_incident_manager_incident"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Plantilla auxiliar para el header -->
+        <template id="report_incident_header">
+            <div class="row mb-4">
+                <div class="col-9 text-center">
+                    <h1>Informe de incidencia</h1>
+                    <h2 style="color: #855979;"><t t-esc="doc.reference"/></h2>
+                </div>
+                <div class="col-3 text-end">
+                    <img t-if="doc.qr_url" 
+                        t-attf-src="/report/barcode/QR/{{doc.qr_url}}?width=90&amp;height=90"
+                        style="width: 90px; height: 90px;"
+                        alt="QR Code"/>
+                    <p class="text-muted small mt-1">Escanea para abrir</p>
+                </div>
+            </div>
+        </template>
+
+        <!-- Plantilla auxiliar para el footer -->
+        <template id="report_incident_footer">
+            <div class="row mt-5">
+                <div class="col-8 text-muted" style="font-size: 0.8em;">
+                    <p>Documento generado automáticamente por PCR Incident Manager</p>
+                    <p><t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/></p>
+                </div>
+                <div class="col-4 text-end">
+                    <img t-if="doc.qr_url" 
+                        t-attf-src="/report/barcode/QR/{{doc.qr_url}}?width=60&amp;height=60"
+                        style="width: 60px; height: 60px;"
+                        alt="QR"/>
+                </div>
+            </div>
+        </template>
+
+        <!-- Plantilla principal -->
+        <template id="report_incident_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <!-- Header -->
+                            <t t-call="pcr_incident_manager.report_incident_header"/>
+
+                            <!-- Info principal -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h3><t t-esc="doc.name"/></h3>
+                                </div>
+                            </div>
+
+                            <!-- Datos (2 columnas) -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <table class="table table-sm table-borderless">
+                                        <tr>
+                                            <td><strong>Estado:</strong></td>
+                                            <td>
+                                                <span t-if="doc.state == 'open'" class="badge bg-info">Abierta</span>
+                                                <span t-if="doc.state == 'in_progress'" class="badge bg-warning">En proceso</span>
+                                                <span t-if="doc.state == 'resolved'" class="badge bg-success">Resuelta</span>
+                                                <span t-if="doc.state == 'closed'" class="badge bg-secondary">Cerrada</span>
+                                                <span t-if="doc.state == 'cancelled'" class="badge bg-danger">Cancelada</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Prioridad:</strong></td>
+                                            <td>
+                                                <span t-if="doc.priority == '0'">Baja</span>
+                                                <span t-if="doc.priority == '1'">Normal</span>
+                                                <span t-if="doc.priority == '2'">Alta</span>
+                                                <span t-if="doc.priority == '3'" style="color: red; font-weight: bold;">Urgente</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Equipo:</strong></td>
+                                            <td><t t-esc="doc.equipment_id.name or '-'"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Técnico:</strong></td>
+                                            <td><t t-esc="doc.technician_id.name or '-'"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-6">
+                                    <table class="table table-sm table-borderless">
+                                        <tr>
+                                            <td><strong>Fecha creación:</strong></td>
+                                            <td><span t-field="doc.date_created" t-options="{'format': 'dd/MM/yyyy HH:mm'}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Fecha cierre:</strong></td>
+                                            <td>
+                                                <span t-if="doc.date_closed" t-field="doc.date_closed" t-options="{'format': 'dd/MM/yyyy HH:mm'}"/>
+                                                <span t-else="">-</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Días abierta:</strong></td>
+                                            <td><t t-esc="doc.days_open"/> días</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tipos:</strong></td>
+                                            <td>
+                                                <t t-foreach="doc.type_ids" t-as="type">
+                                                    <span class="badge bg-primary me-1"><t t-esc="type.name"/></span>
+                                                </t>
+                                                <span t-if="not doc.type_ids">-</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="row mt-4" t-if="doc.description">
+                                <div class="col-12">
+                                    <h4>Descripción</h4>
+                                    <div class="border p-3" style="background-color: #ddf7e3;">
+                                        <p><t t-esc="doc.description"/></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Solución -->
+                            <div class="row mt-4" t-if="doc.solution">
+                                <div class="col-12">
+                                    <h4>Solución</h4>
+                                    <div class="border p-3" style="background-color: #ddf7e3;">
+                                        <p><t t-esc="doc.solution"/></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Info del equipo -->
+                            <div class="row mt-4" t-if="doc.equipment_id">
+                                <div class="col-12">
+                                    <h4>Información del equipo</h4>
+                                    <div class="row">
+                                        <div class="col-3" t-if="doc.equipment_id.image">
+                                            <img t-att-src="image_data_uri(doc.equipment_id.image)" 
+                                                style="max-width: 150px; max-height: 150px;"
+                                                alt="Imagen del equipo"/>
+                                        </div>
+                                        <div t-attf-class="col-#{doc.equipment_id.image and '9' or '12'}">
+                                            <table class="table table-bordered table-sm">
+                                                <tr>
+                                                    <td width="25%"><strong>Nombre</strong></td>
+                                                    <td><t t-esc="doc.equipment_id.name"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Código</strong></td>
+                                                    <td><t t-esc="doc.equipment_id.code or '-'"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Categoría</strong></td>
+                                                    <td><t t-esc="doc.equipment_id.category or '-'"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Estado</strong></td>
+                                                    <td>
+                                                        <span t-if="doc.equipment_id.state == 'operative'" class="badge bg-success">Operativo</span>
+                                                        <span t-if="doc.equipment_id.state == 'broken'" class="badge bg-danger">Averiado</span>
+                                                        <span t-if="doc.equipment_id.state == 'maintenance'" class="badge bg-warning">Mantenimiento</span>
+                                                    </td>
+                                                </tr>
+                                                <tr t-if="doc.equipment_id.description">
+                                                    <td><strong>Descripción</strong></td>
+                                                    <td><t t-esc="doc.equipment_id.description"/></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Info del técnico -->
+                            <div class="row mt-4" t-if="doc.technician_id">
+                                <div class="col-12">
+                                    <h4>Técnico asignado</h4>
+                                    <div class="row">
+                                        <div class="col-2" t-if="doc.technician_id.image">
+                                            <img t-att-src="image_data_uri(doc.technician_id.image)" 
+                                                style="max-width: 80px; max-height: 80px; border-radius: 50%;"
+                                                alt="Foto del técnico"/>
+                                        </div>
+                                        <div t-attf-class="col-#{doc.technician_id.image and '10' or '12'}">
+                                            <table class="table table-bordered table-sm">
+                                                <tr>
+                                                    <td width="25%"><strong>Nombre</strong></td>
+                                                    <td><t t-esc="doc.technician_id.name"/></td>
+                                                </tr>
+                                                <tr t-if="doc.technician_id.specialty">
+                                                    <td><strong>Especialidad</strong></td>
+                                                    <td><t t-esc="doc.technician_id.specialty"/></td>
+                                                </tr>
+                                                <tr t-if="doc.technician_id.email">
+                                                    <td><strong>Correo electrónico</strong></td>
+                                                    <td><t t-esc="doc.technician_id.email"/></td>
+                                                </tr>
+                                                <tr t-if="doc.technician_id.phone">
+                                                    <td><strong>Teléfono</strong></td>
+                                                    <td><t t-esc="doc.technician_id.phone"/></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <t t-call="pcr_incident_manager.report_incident_footer"/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
