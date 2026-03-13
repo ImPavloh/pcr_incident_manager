@@ -17,13 +17,13 @@ Módulo para Odoo 17 que permite gestionar incidencias IT y mantenimiento de equ
 
 ## Capturas
 
-![Vista Kanban de incidencias](static/description/screenshot-01.png)
+![Vista Kanban de incidencias](./pcr_incident_manager/static/description/screenshot-01.png)
 
-![Vista form de equipos](static/description/screenshot-02.png)
+![Vista form de equipos](./pcr_incident_manager/static/description/screenshot-02.png)
 
-![Incidencia](static/description/screenshot-03.png)
+![Incidencia](./pcr_incident_manager/static/description/screenshot-03.png)
 
-![Ajustes del módulo](static/description/screenshot-04.png)
+![Ajustes del módulo](./pcr_incident_manager/static/description/screenshot-04.png)
 
 ## Requisitos
 
