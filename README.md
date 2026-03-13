@@ -1,8 +1,8 @@
-# PCR Incident Manager - Odoo
+# PCR Incident Manager - Odoo 17
 
 **Gestión inteligente de incidencias IT y mantenimiento con priorización asistida por IA**
 
-Módulo para Odoo que permite gestionar incidencias IT y mantenimiento de equipos. Incluye asistencia de inteligencia artificial para sugerir prioridades y soluciones.
+Módulo para Odoo 17 que permite gestionar incidencias IT y mantenimiento de equipos. Incluye asistencia de inteligencia artificial para sugerir prioridades y soluciones.
 
 ## Características
 
@@ -27,7 +27,7 @@ Módulo para Odoo que permite gestionar incidencias IT y mantenimiento de equipo
 
 ## Requisitos
 
-- Odoo 17.0 o superior (según versión del módulo)
+- Odoo 17.0
 - Módulos dependientes: `base`, `mail`, `contacts`
 - (Opcional) `pip install qrcode pillow` para códigos QR
 - (Opcional) Clave API de [OpenRouter](https://openrouter.ai/keys) para IA
@@ -38,7 +38,7 @@ Módulo para Odoo que permite gestionar incidencias IT y mantenimiento de equipo
 1. **Descarga el módulo:**
 
 ```bash
-git clone https://github.com/impavloh/pcr_incident_manager.git
+git clone -b 17.0 https://github.com/ImPavloh/pcr_incident_manager.git
 ```
 
 O ve a Odoo Apps, busca "PCR Incident Manager" e instálalo directamente desde allí. O haz clic [aquí](https://apps.odoo.com/apps/modules/17.0/pcr_incident_manager) para ir a la página del módulo.
@@ -56,6 +56,10 @@ En Odoo, ve a **Apps** → **Actualizar lista de aplicaciones** (modo desarrolla
 4. **Instala el módulo:**
 
 Busca "PCR Incident Manager" e instala.
+
+También puedes acceder al módulo desde Odoo Apps:
+
+https://apps.odoo.com/apps/modules/17.0/pcr_incident_manager
 
 ## Configuración
 
